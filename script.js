@@ -1,6 +1,5 @@
 const gameBoard = document.getElementById('game-board');
-const cards = [
-                { id: "0", duo : "0"},   { id: "1", duo : "1"},   { id: "2", duo : "2"},
+const cards = [ { id: "0", duo : "0"},   { id: "1", duo : "1"},   { id: "2", duo : "2"},
                 { id: "3", duo : "2"},   { id: "4", duo : "0"},   { id: "5", duo : "4"},
                 { id: "6", duo : "3"},   { id: "7", duo : "3"},   { id: "8", duo : "1"},
                 { id: "9", duo : "4"},   { id: "10", duo : "10"}, { id: "11", duo : "11"},
@@ -10,7 +9,6 @@ const cards = [
 
 let firstCard = null;
 let secondCard = null;
-let flip = 0;
 
 const createCard = (cardText, cardId, cardClass) => {
     const cardElement = document.createElement('div');
@@ -83,4 +81,13 @@ const is_in = (text, list) => {
 for (let i = 0; i < cards.length; i++) {
     const card = createCard(/*card text*/cards[i].duo, cards[i].id, ("duoID"+cards[i].duo));
     gameBoard.appendChild(card);
+}
+
+const reset = () => {
+    for ( let card of gameBoard.children ) {
+        card.classList.remove('flip');
+        card.addEventListener('click', flipCard);
+    }
+    firstCard = null;
+    secondCard = null;
 }
