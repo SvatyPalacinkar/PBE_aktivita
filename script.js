@@ -2,7 +2,7 @@ const gameBoard = document.getElementById('game-board');
 const list = [ 
                 { id: "0", duo : "0", src: "./imgs/offline_ups.png"},
                 { id: "1", duo : "0", src: "Offline UPS"},
-                { id: "2", duo : "1", src: "./imgs/online_ups.png"},
+                { id: "2", duo : "1", src: "./imgs/Online_ups.png"},
                 { id: "3", duo : "1", src: "Online UPS"},
                 { id: "4", duo : "2", src: "./imgs/Line_interactive_ups.png"},
                 { id: "5", duo : "2", src: "Line interactive UPS"},
