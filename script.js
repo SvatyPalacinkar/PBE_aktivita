@@ -1,22 +1,22 @@
 const gameBoard = document.getElementById('game-board');
 const list = [ 
-                { id: "0", duo : "0", src: "./imgs/offline_ups.png"},
+                { id: "0", duo : "0", src: "img_offline_ups.png"},
                 { id: "1", duo : "0", src: "Offline UPS"},
-                { id: "2", duo : "1", src: "./imgs/Online_ups.png"},
+                { id: "2", duo : "1", src: "img_Online_ups.png"},
                 { id: "3", duo : "1", src: "Online UPS"},
-                { id: "4", duo : "2", src: "./imgs/Line_interactive_ups.png"},
+                { id: "4", duo : "2", src: "img_Line_interactive_ups.png"},
                 { id: "5", duo : "2", src: "Line interactive UPS"},
-                { id: "6", duo : "3", src: "./imgs/Raid_6.png"},
+                { id: "6", duo : "3", src: "img_Raid_6.png"},
                 { id: "7", duo : "3", src: "RAID 6"},
-                { id: "8", duo : "4", src: "./imgs/Bez_VPN.png"},
+                { id: "8", duo : "4", src: "img_Bez_VPN.png"},
                 { id: "9", duo : "4", src: "Štandartné pripojenie"},
-                { id: "10", duo : "10", src: "./imgs/VPN.png"},
+                { id: "10", duo : "10", src: "img_VPN.png"},
                 { id: "11", duo : "10", src: "VPN"},
-                { id: "12", duo : "11", src: "./imgs/vertikalne_skalovanie.png"},
+                { id: "12", duo : "11", src: "img_vertikalne_skalovanie.png"},
                 { id: "13", duo : "11", src: "Vertikálne škálovanie"},
-                { id: "14", duo : "12", src: "./imgs/horizontalne_skalovanie.png"},
+                { id: "14", duo : "12", src: "img_horizontalne_skalovanie.png"},
                 { id: "15", duo : "12", src: "Horizontálne škálovanie"},
-                { id: "16", duo : "13", src: "./imgs/enigma.png"},
+                { id: "16", duo : "13", src: "img_enigma.png"},
                 { id: "17", duo : "13", src: "Šifrovanie (enigma)"},
             ];
 let cards = [], pomoc = [];
@@ -31,7 +31,7 @@ const createCard = (cardId, cardClass, imgSrc) => {
 
     const cardFront = document.createElement('div');
     cardFront.classList.add('card-face', 'card-front');
-    if(imgSrc[0] == '.'){
+    if(imgSrc.substring(0,4) == "img_"){
         const cardBack = document.createElement('img');
         cardBack.src = imgSrc;
         cardBack.classList.add('card-face', 'card-back');
