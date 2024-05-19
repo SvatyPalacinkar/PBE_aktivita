@@ -1,8 +1,9 @@
 #game-board{
     display: grid;
-    grid-template-columns: 200px 200px 200px 200px 200px ;
-    grid-template-rows: 200px 200px 200px 200px ;
+    grid-template-columns: 200px 200px 200px 200px 200px 200px;
+    grid-template-rows: 200px 200px 200px;
     grid-gap: 10px;
+    margin: 25px;
 }
 .card {
     grid-column: 1 5;
@@ -10,16 +11,13 @@
     position: relative;
     width: 200px;
     height: 200px;
-    margin: 5px;
-    text-align: center;
     transition: transform 0.5s;
 }
 
 .card-face {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
+    width: 200px;
+    height: 200px;
 }
 
 .card-front {
@@ -27,7 +25,12 @@
 }
 
 .card-back {
-    background-color: black;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    font-size: 30px;
+    color: white;
+    transform: rotateY(-180deg);
 }
 
 .card {
@@ -37,14 +40,12 @@
     }
     .card-back{
         z-index: 0;
-        background-color: #333;
     }
 }
 
 .card.flip {
     .card-face{
         z-index: 0;
-        background-color: #f1f1f1;
     }
     .card-back{
         z-index: 1;

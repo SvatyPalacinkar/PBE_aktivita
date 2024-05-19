@@ -1,16 +1,29 @@
 const gameBoard = document.getElementById('game-board');
-const cards = [ { id: "0", duo : "0"},   { id: "1", duo : "1"},   { id: "2", duo : "2"},
-                { id: "3", duo : "2"},   { id: "4", duo : "0"},   { id: "5", duo : "4"},
-                { id: "6", duo : "3"},   { id: "7", duo : "3"},   { id: "8", duo : "1"},
-                { id: "9", duo : "4"},   { id: "10", duo : "10"}, { id: "11", duo : "11"},
-                { id: "12", duo : "12"}, { id: "13", duo : "12"}, { id: "14", duo : "10"},
-                { id: "15", duo : "14"}, { id: "16", duo : "13"}, { id: "17", duo : "13"},
-                { id: "18", duo : "11"}, { id: "19", duo : "14"} ];
-
+const list = [ 
+                { id: "0", duo : "0", src: "./imgs/offline_ups.png"},
+                { id: "1", duo : "0", src: "Offline UPS"},
+                { id: "2", duo : "1", src: "./imgs/online_ups.png"},
+                { id: "3", duo : "1", src: "Online UPS"},
+                { id: "4", duo : "2", src: "./imgs/Line_interactive_ups.png"},
+                { id: "5", duo : "2", src: "Line interactive UPS"},
+                { id: "6", duo : "3", src: "./imgs/Raid_6.png"},
+                { id: "7", duo : "3", src: "RAID 6"},
+                { id: "8", duo : "4", src: "./imgs/Bez_VPN.png"},
+                { id: "9", duo : "4", src: "Štandartné pripojenie"},
+                { id: "10", duo : "10", src: "./imgs/VPN.png"},
+                { id: "11", duo : "10", src: "VPN"},
+                { id: "12", duo : "11", src: "./imgs/vertikalne_skalovanie.png"},
+                { id: "13", duo : "11", src: "Vertikálne škálovanie"},
+                { id: "14", duo : "12", src: "./imgs/horizontalne_skalovanie.png"},
+                { id: "15", duo : "12", src: "Horizontálne škálovanie"},
+                { id: "16", duo : "13", src: "./imgs/enigma.png"},
+                { id: "17", duo : "13", src: "Šifrovanie (enigma)"},
+            ];
+let cards = [], pomoc = [];
 let firstCard = null;
 let secondCard = null;
 
-const createCard = (cardText, cardId, cardClass) => {
+const createCard = (cardId, cardClass, imgSrc) => {
     const cardElement = document.createElement('div');
     cardElement.classList.add('card');
     cardElement.classList.add(cardClass);
@@ -18,13 +31,21 @@ const createCard = (cardText, cardId, cardClass) => {
 
     const cardFront = document.createElement('div');
     cardFront.classList.add('card-face', 'card-front');
-    cardFront.textContent = cardText;
-
-    const cardBack = document.createElement('div');
-    cardBack.classList.add('card-face', 'card-back');
-
-    cardElement.appendChild(cardFront);
-    cardElement.appendChild(cardBack);
+    if(imgSrc[0] == '.'){
+        const cardBack = document.createElement('img');
+        cardBack.src = imgSrc;
+        cardBack.classList.add('card-face', 'card-back');
+        cardElement.appendChild(cardFront);
+        cardElement.appendChild(cardBack);
+    }
+    else{
+        const cardBack = document.createElement('div');
+        cardBack.textContent = imgSrc;
+        cardBack.classList.add('card-face', 'card-back');
+        cardElement.appendChild(cardFront);
+        cardElement.appendChild(cardBack);
+    }
+    
 
     cardElement.addEventListener('click', flipCard);
 
@@ -40,17 +61,20 @@ function flipCard(){
         this.classList.add('flip');
     }
     if (firstCard == null) {
+        console.log("Prvá karta")
         firstCard = this;
     }
     else {
-        if ( firstCard == this) {
+        if (firstCard == this) {
+            console.log("Otočenie tej istej karty naspäť")
             firstCard = null;
         }
         else{
-
+            console.log("Druhá karta")
             secondCard = this;
             
             if (firstCard.classList[1] != secondCard.classList[1]) {
+                console.log("Karty sa nezhoduju")
                 setTimeout(() => {
                     firstCard.classList.remove('flip');
                     secondCard.classList.remove('flip');
@@ -59,12 +83,25 @@ function flipCard(){
                 }, 250);
             }
             else if (firstCard.id != secondCard.id){
+                console.log("Karty sa zhoduju")
                 firstCard.removeEventListener('click', flipCard);
                 secondCard.removeEventListener('click', flipCard);
                 firstCard = null;
                 secondCard = null;
             }
         }
+    }
+}
+
+const randomizer = () => {
+    let j;
+    cards = [];
+    pomoc = [];
+    pomoc = list.concat();
+    for(let i = 0; i < 18; i++){
+        j = Math.floor(Math.random() * pomoc.length)
+        cards.push(pomoc[j]);
+        pomoc.splice(j,1);
     }
 }
 
@@ -78,16 +115,21 @@ const is_in = (text, list) => {
     return output
 }
 
-for (let i = 0; i < cards.length; i++) {
-    const card = createCard(/*card text*/cards[i].duo, cards[i].id, ("duoID"+cards[i].duo));
-    gameBoard.appendChild(card);
-}
-
 const reset = () => {
-    for ( let card of gameBoard.children ) {
-        card.classList.remove('flip');
-        card.addEventListener('click', flipCard);
+    for (let i = gameBoard.childElementCount; i > 0; i--) {
+        gameBoard.removeChild(gameBoard.firstChild);
+    }
+    randomizer();
+    for (let i = 0; i < cards.length; i++) {
+        const card = createCard(cards[i].id, ("duoID"+cards[i].duo), cards[i].src);
+        gameBoard.appendChild(card);
     }
     firstCard = null;
     secondCard = null;
+}
+
+randomizer();
+for (let i = 0; i < cards.length; i++) {
+    const card = createCard(cards[i].id, ("duoID"+cards[i].duo), cards[i].src);
+    gameBoard.appendChild(card);
 }
